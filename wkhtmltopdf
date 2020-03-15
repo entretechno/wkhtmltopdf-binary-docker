@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'wicked_pdf'
+
+image_version = '1.0'
+wkhtmltopdf_version = Gem.loaded_specs['wkhtmltopdf-binary'].version
+
+tag = "wkhtmltopdf-binary:#{image_version}-#{wkhtmltopdf_version}"
+
+unless system('docker', 'inspect', '--type', 'image', tag, out: File::NULL)
+  raise RuntimeError unless
+    system(
+      'docker',
+      'build',
+      '-t', tag,
+      '--build-arg', "wkhtmltopdf_version=#{wkhtmltopdf_version}",
+      __dir__,
+      out: $stderr
+    )
+end
+
+tempfile = WickedPdf::WickedPdfTempfile.new('')
+tempfile_dir = File.dirname(tempfile.path)
+tempfile.unlink
+
+raise RuntimeError unless
+  system(
+    'docker',
+    'run',
+    '--rm',
+    '-v', "#{File.realpath(tempfile_dir)}:#{tempfile_dir}",
+    '-v', "#{File.realpath(Dir.pwd)}:#{Dir.pwd}",
+    tag,
+    *ARGV
+  )
