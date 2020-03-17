@@ -9,7 +9,7 @@ container to render PDFs when calling
 1. Install Docker
 2. Ensure [Docker has access](https://docs.docker.com/docker-for-mac/#file-sharing) to:
     - `wicked_pdf`'s tempfile directory:
-        - See `WickedPdf::WickedPdfTempfile.new('').path`
+        - See `File.realpath(WickedPdf::WickedPdfTempfile.new('').path)`
     - Your project directory
 3. Create or amend the `RUBYOPT` environment variable to require `exe_path.rb`
     - This can be set permanently by adding the following to your `~/.profile`:
