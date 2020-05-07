@@ -2,7 +2,7 @@
 
 require 'wicked_pdf'
 
-image_version = '1.0'
+image_version = '1.1'
 wkhtmltopdf_version = Gem.loaded_specs['wkhtmltopdf-binary'].version
 
 tag = "wkhtmltopdf-binary:#{image_version}-#{wkhtmltopdf_version}"

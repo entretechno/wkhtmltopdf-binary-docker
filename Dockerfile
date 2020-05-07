@@ -8,4 +8,5 @@ RUN ["apt-get", "install", "-y", "libjpeg-dev", "libpng-dev", "libxrender-dev", 
 
 RUN gem install wkhtmltopdf-binary -v $wkhtmltopdf_version
 
-ENTRYPOINT ["wkhtmltopdf"]
+ADD entrypoint /
+ENTRYPOINT ["/entrypoint"]

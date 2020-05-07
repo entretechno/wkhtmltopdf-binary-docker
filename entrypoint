@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -euf
+
+# Use host machine as localhost/lvh.me (this will not work for any subdomains)
+echo "$(getent hosts host.docker.internal | awk '{ print $1 }') localhost" >> /etc/hosts
+echo "$(getent hosts host.docker.internal | awk '{ print $1 }') lvh.me" >> /etc/hosts
+
+wkhtmltopdf $@
